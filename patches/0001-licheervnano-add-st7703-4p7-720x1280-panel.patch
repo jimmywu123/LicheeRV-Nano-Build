@@ -1,0 +1,45 @@
+diff --git a/u-boot-2021.10/cmd/cvi_vo.c b/u-boot-2021.10/cmd/cvi_vo.c
+index 9a93dbc..376c8f5 100644
+--- a/u-boot-2021.10/cmd/cvi_vo.c
++++ b/u-boot-2021.10/cmd/cvi_vo.c
+@@ -414,6 +414,12 @@ static int do_startvo(struct cmd_tbl *cmdtp, int flag, int argc, char * const ar
+ 			panel_desc.hs_timing_cfg = &hs_timing_cfg_st7701_d310t9362v1_480x800;
+ 			panel_desc.dsi_init_cmds = dsi_init_cmds_st7701_d310t9362v1_480x800;
+ 			panel_desc.dsi_init_cmds_size = ARRAY_SIZE(dsi_init_cmds_st7701_d310t9362v1_480x800);		// g
++		} else if (strcmp(panel_name,"st7703_4p7_720x1280") == 0) {
++			panel_desc.panel_name = "ST7703-720x1280";
++			panel_desc.dev_cfg = &dev_cfg_st7703_720x1280;
++			panel_desc.hs_timing_cfg = &hs_timing_cfg_st7703_720x1280;
++			panel_desc.dsi_init_cmds = dsi_init_cmds_st7703_720x1280;
++			panel_desc.dsi_init_cmds_size = ARRAY_SIZE(dsi_init_cmds_st7703_720x1280);
+ 		} else {
+ 			printf("panel %s not found\n\r", panel_name);
+ 		}
+diff --git a/u-boot-2021.10/include/cvitek/cvi_panels/cvi_panels.h b/u-boot-2021.10/include/cvitek/cvi_panels/cvi_panels.h
+index 8a36d1d..3b7d3d8 100644
+--- a/u-boot-2021.10/include/cvitek/cvi_panels/cvi_panels.h
++++ b/u-boot-2021.10/include/cvitek/cvi_panels/cvi_panels.h
+@@ -26,6 +26,7 @@ struct panel_desc_s {
+ };
+ 
+ #include "dsi_st7701_d300fpc9307a.h"
++#include "dsi_st7703_4p7_720x1280.h"
+ #include "dsi_zct2133v1.h"
+ #include "dsi_mtd70092b.h"
+ #include "dsi_st7701_dxq5d0019b480854.h"
+@@ -207,6 +208,15 @@ static struct panel_desc_s panel_desc = {
+         .dsi_init_cmds = dsi_init_cmds_mtd700920b_800x1280,
+         .dsi_init_cmds_size = ARRAY_SIZE(dsi_init_cmds_mtd700920b_800x1280)
+ };
++#elif defined(MIPI_PANEL_ST7703_4P7_720X1280)
++#include "dsi_st7703_4p7_720x1280.h"
++static struct panel_desc_s panel_desc = {
++        .panel_name = "ST7703-720x1280",
++        .dev_cfg = &dev_cfg_st7703_720x1280,
++        .hs_timing_cfg = &hs_timing_cfg_st7703_720x1280,
++        .dsi_init_cmds = dsi_init_cmds_st7703_720x1280,
++        .dsi_init_cmds_size = ARRAY_SIZE(dsi_init_cmds_st7703_720x1280)
++};
+ #elif defined(I80_PANEL_ST7789V)
+ #include "i80_st7789v.h"
+ static struct panel_desc_s panel_desc = {
