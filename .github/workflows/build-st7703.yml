@@ -15,12 +15,12 @@ jobs:
         run: |
           wget -q https://sophon-file.sophon.cn/sophon-prod-s3/drive/23/03/07/16/host-tools.tar.gz
           tar xf host-tools.tar.gz
-          mv host-tools gcc
       - name: Apply ST7703 panel patch
         run: |
           git apply patches/0001-licheervnano-add-st7703-4p7-720x1280-panel.patch
       - name: Build fip
         run: |
+          export PATH=$(pwd)/host-tools/gcc/bin:$PATH
           source build/cvisetup.sh
           defconfig sg2002_licheervnano_sd
           clean_uboot
